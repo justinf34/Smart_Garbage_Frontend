@@ -21,7 +21,7 @@ export default class PreviewImg extends React.Component {
                     }
                     }>
                 </TouchableOpacity>
-                <Text style={{ alignItems: 'center' }}>Picture taken</Text>
+                <Text>Picture taken</Text>
             </View >
         )
     }
