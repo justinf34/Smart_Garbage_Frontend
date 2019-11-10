@@ -59,7 +59,7 @@ export default class GarbageCam extends React.Component {
                                     }
 
                                 }}>
-                                <Text style={{ fontSize: 24, marginBottom: 10, color: 'white' }}> Capture </Text>
+                                <Text style={{ fontSize: 35, marginBottom: 20, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
                         </View>
                     </Camera>
