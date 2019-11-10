@@ -19,7 +19,6 @@ export default class GarbageCam extends React.Component {
         this.setState({ hasCameraPermission: status === 'granted' });
     }
 
-
     sendGarbage(photo) {
         url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com/predict:80";
         data = JSON.stringify({ image: photo });
