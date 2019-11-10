@@ -10,6 +10,7 @@ export default class GarbageCam extends React.Component {
         hasCameraPermission: null,
         type: Camera.Constants.Type.back,
         photo: null,
+        garbage_class: null
     };
 
     async componentDidMount() {
@@ -18,20 +19,26 @@ export default class GarbageCam extends React.Component {
     }
 
 
-    sendGarbage() {
-        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com:ad";
-        data = JSON.stringify({ method: "POST", body: { image: "Hello" } });
+    sendGarbage(photo) {
+        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com/predict:80";
+        data = JSON.stringify({ image: photo });
         fetch(url, {
             method: 'POST',
             body: data
-        });
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("model says", data.answer);
+                this.setState({ garbage_class: data.answer })
+            }).catch(error => {
+                alert(error)
+            })
     }
 
 
     render() {
-        const { photo } = this.state
         const { hasCameraPermission } = this.state;
-        const options = { quality: 1, exif: true }
+        const options = { quality: 1, exif: true, base64: true }
         if (hasCameraPermission === null) {
             return <View />;
         } else if (hasCameraPermission === false) {
@@ -67,10 +74,11 @@ export default class GarbageCam extends React.Component {
                                 onPress={async () => {
                                     if (this.camera) {
                                         let photo = await this.camera.takePictureAsync(options);
+                                        this.sendGarbage(photo)
                                         this.setState({ photo })
                                     }
                                     setTimeout(() => {
-                                        this.setState({ photo: null })
+                                        this.setState({ photo: null, garbage_class: null })
                                     }, 2000)
                                 }}>
                                 <Text style={{ fontSize: 35, marginBottom: 20, color: 'green' }}> Capture </Text>
