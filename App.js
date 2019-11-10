@@ -20,7 +20,7 @@ export default class GarbageCam extends React.Component {
 
 
     sendGarbage() {
-        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com:80";
+        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com/predict";
         data = JSON.stringify({ method: "POST", body: { image: "Hello" } });
         fetch(url, {
             method: 'POST',
