@@ -2,11 +2,14 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
+import Preview from './christian/components/Preview';
+import PreviewImg from './christian/components/Preview';
 
-export default class CameraExample extends React.Component {
+export default class GarbageCam extends React.Component {
     state = {
         hasCameraPermission: null,
-        photo: null
+        type: Camera.Constants.Type.back,
+        photo: null,
     };
 
     async componentDidMount() {
@@ -28,14 +31,27 @@ export default class CameraExample extends React.Component {
     render() {
         const { photo } = this.state
         const { hasCameraPermission } = this.state;
+        const options = { quality: 1, exif: true }
         if (hasCameraPermission === null) {
             return <View />;
         } else if (hasCameraPermission === false) {
             return <Text>No access to camera</Text>;
         } else {
+
+            if (this.state.photo) {
+                console.log(this.state.photo)
+                return (
+                    <PreviewImg imageUri={this.state.photo.uri}></PreviewImg>
+                );
+            }
+
             return (
                 <View style={{ flex: 1 }}>
-                    <Camera style={{ flex: 1 }} type={this.state.type}>
+                    <Camera style={{ flex: 1 }} type={this.state.type}
+                        ref={ref => {
+                            this.camera = ref;
+                        }}
+                    >
                         <View
                             style={{
                                 flex: 1,
@@ -44,12 +60,20 @@ export default class CameraExample extends React.Component {
                             }}>
                             <TouchableOpacity
                                 style={{
-                                    flex: 0.1,
+                                    flex: 1,
                                     alignSelf: 'flex-end',
                                     alignItems: 'center',
                                 }}
-                                onPress={this.sayHello}>
-                                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+                                onPress={async () => {
+                                    if (this.camera) {
+                                        let photo = await this.camera.takePictureAsync(options);
+                                        this.setState({ photo })
+                                    }
+                                    setTimeout(() => {
+                                        this.setState({ photo: null })
+                                    }, 2000)
+                                }}>
+                                <Text style={{ fontSize: 35, marginBottom: 20, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
                         </View>
                     </Camera>
