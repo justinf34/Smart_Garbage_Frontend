@@ -22,18 +22,22 @@ export default class GarbageCam extends React.Component {
     sendGarbage(photo) {
         console.log('sendGarbage() called')
         url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com/predict:80";
-        data = JSON.stringify({ image: photo });
-        fetch(url, {
+        // data = JSON.stringify({ image: photo });
+        response = fetch(url, {
             method: 'POST',
-            body: data
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("model says", data.answer);
-                this.setState({ garbage_class: data.answer })
-            }).catch(error => {
-                alert(error)
-            })
+        }).then(data => {
+            console.log(data)
+        });
+
+        this.setState({ garbage_class: response.answer })
+        // console.log(garbage_class)
+        // .then(data1 => {
+        //     console.log("model says", data1.answer);
+        //     this.setState({ garbage_class: data1.answer })
+        // }).catch(error => {
+        //     alert(error)
+        //     this.setState({ garbage_class: null })
+        // })
     }
 
     render() {
@@ -81,9 +85,9 @@ export default class GarbageCam extends React.Component {
                                         this.sendGarbage(photo)
                                         this.setState({ photo })
                                     }
-                                    // setTimeout(() => {
-                                    //     this.setState({ photo: null, garbage_class: null })
-                                    // }, 2000)
+                                    setTimeout(() => {
+                                        this.setState({ photo: null, garbage_class: null })
+                                    }, 2000)
                                 }}>
                                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, marginBottom: 30, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
