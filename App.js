@@ -20,7 +20,7 @@ export default class GarbageCam extends React.Component {
 
 
     sendGarbage() {
-        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com:ad";
+        url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com:80";
         data = JSON.stringify({ method: "POST", body: { image: "Hello" } });
         fetch(url, {
             method: 'POST',
@@ -66,6 +66,7 @@ export default class GarbageCam extends React.Component {
                                     alignItems: 'center',
                                 }}
                                 onPress={async () => {
+                                    this.sendGarbage();
                                     if (this.camera) {
                                         let photo = await this.camera.takePictureAsync(options);
                                         this.setState({ photo })
