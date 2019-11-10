@@ -22,7 +22,7 @@ export default class PreviewImg extends React.Component {
                     }>
                 </TouchableOpacity>
                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, color: 'green' }}>{this.props.compost}</Text>
-                <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, color: 'red' }}>{this.props.notcompost} </Text>
+                <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, color: 'blue' }}>{this.props.recycle} </Text>
             </View >
         )
     }

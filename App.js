@@ -21,6 +21,7 @@ export default class GarbageCam extends React.Component {
 
 
     sendGarbage(photo) {
+        console.log('sendGarbage() called')
         url = "http://ec2-18-221-245-198.us-east-2.compute.amazonaws.com/predict:80";
         data = JSON.stringify({ image: photo });
         fetch(url, {
@@ -45,10 +46,14 @@ export default class GarbageCam extends React.Component {
             return <Text>No access to camera</Text>;
         } else {
 
-            if (this.state.photo) {
-                console.log(this.state.photo)
+            if (this.state.garbage_class == 0) {
                 return (
-                    <PreviewImg compost='Compost!' imageUri={this.state.photo.uri}></PreviewImg>
+                    <PreviewImg compost='Compostable' imageUri={this.state.photo.uri}></PreviewImg>
+                );
+            }
+            else if (this.state.garbage_class == 1) {
+                return (
+                    <PreviewImg recycle='Recyclable' imageUri={this.state.photo.uri}></PreviewImg>
                 );
             }
 
@@ -72,15 +77,14 @@ export default class GarbageCam extends React.Component {
                                     alignItems: 'center',
                                 }}
                                 onPress={async () => {
-                                    this.sendGarbage();
                                     if (this.camera) {
                                         let photo = await this.camera.takePictureAsync(options);
                                         this.sendGarbage(photo)
                                         this.setState({ photo })
                                     }
-                                    setTimeout(() => {
-                                        this.setState({ photo: null, garbage_class: null })
-                                    }, 2000)
+                                    // setTimeout(() => {
+                                    //     this.setState({ photo: null, garbage_class: null })
+                                    // }, 2000)
                                 }}>
                                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, marginBottom: 30, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
