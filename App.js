@@ -57,7 +57,9 @@ export default class GarbageCam extends React.Component {
                                         let photo = await this.camera.takePictureAsync(options);
                                         this.setState({ photo })
                                     }
-
+                                    setTimeout(() => {
+                                        this.setState({ photo: null })
+                                    }, 2000)
                                 }}>
                                 <Text style={{ fontSize: 24, marginBottom: 10, color: 'white' }}> Capture </Text>
                             </TouchableOpacity>
