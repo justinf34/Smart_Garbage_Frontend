@@ -4,6 +4,7 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import Preview from './christian/components/Preview';
 import PreviewImg from './christian/components/Preview';
+import { bold } from 'ansi-colors';
 
 export default class GarbageCam extends React.Component {
     state = {
@@ -34,7 +35,6 @@ export default class GarbageCam extends React.Component {
                 alert(error)
             })
     }
-
 
     render() {
         const { hasCameraPermission } = this.state;
@@ -72,6 +72,7 @@ export default class GarbageCam extends React.Component {
                                     alignItems: 'center',
                                 }}
                                 onPress={async () => {
+                                    this.sendGarbage();
                                     if (this.camera) {
                                         let photo = await this.camera.takePictureAsync(options);
                                         this.sendGarbage(photo)
@@ -81,7 +82,7 @@ export default class GarbageCam extends React.Component {
                                         this.setState({ photo: null, garbage_class: null })
                                     }, 2000)
                                 }}>
-                                <Text style={{ fontSize: 35, marginBottom: 20, color: 'green' }}> Capture </Text>
+                                <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, marginBottom: 30, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
                         </View>
                     </Camera>
