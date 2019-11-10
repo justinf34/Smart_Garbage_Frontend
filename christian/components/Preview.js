@@ -21,7 +21,7 @@ export default class PreviewImg extends React.Component {
                     }
                     }>
                 </TouchableOpacity>
-                <Text>Picture taken</Text>
+                <Text style={{textAlign:"center" ,fontWeight:"bold" , fontSize: 28, color: 'green' }}>Compost or not Compost </Text>
             </View >
         )
     }
