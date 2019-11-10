@@ -41,7 +41,7 @@ export default class GarbageCam extends React.Component {
             if (this.state.photo) {
                 console.log(this.state.photo)
                 return (
-                    <PreviewImg imageUri={this.state.photo.uri}></PreviewImg>
+                    <PreviewImg compost='Compost!' imageUri={this.state.photo.uri}></PreviewImg>
                 );
             }
 
@@ -74,7 +74,7 @@ export default class GarbageCam extends React.Component {
                                         this.setState({ photo: null })
                                     }, 2000)
                                 }}>
-                               <Text style={{textAlign:"center" ,fontWeight:"bold" , fontSize: 28, marginBottom: 30, color: 'green' }}> Capture </Text>
+                                <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 28, marginBottom: 30, color: 'green' }}> Capture </Text>
                             </TouchableOpacity>
                         </View>
                     </Camera>
